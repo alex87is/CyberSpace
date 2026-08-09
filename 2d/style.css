@@ -1,0 +1,283 @@
+:root {
+  --bg: #020308;
+  --ok: #5cf29a;
+  --bad: #ff4d5e;
+  --accent: #4fd1ff;
+  --panel-bg: rgba(8, 12, 26, 0.92);
+  --border: rgba(79, 209, 255, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  overflow: hidden;
+  font-family: 'Segoe UI', 'Consolas', monospace;
+  color: #dff2ff;
+  user-select: none;
+}
+
+#game-canvas {
+  display: block;
+  position: absolute;
+  inset: 0;
+  cursor: crosshair;
+}
+
+/* ---------------- HUD ---------------- */
+
+.hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+}
+.hud.visible { display: block; }
+
+.hud-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 14px 26px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: linear-gradient(180deg, rgba(2, 3, 8, 0.75) 0%, rgba(2, 3, 8, 0) 100%);
+}
+
+.hud-pill {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 12px rgba(79, 209, 255, 0.15);
+}
+
+.hud-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #7fa8c9;
+}
+
+.hud-lives {
+  display: inline-flex;
+  gap: 3px;
+}
+.life-icon {
+  color: var(--ok);
+  text-shadow: 0 0 6px var(--ok);
+  font-size: 12px;
+  transform: rotate(90deg);
+  display: inline-block;
+}
+.life-icon.spent {
+  color: #333;
+  text-shadow: none;
+}
+#hud-lives.hit {
+  animation: pulseRed 0.25s ease;
+}
+@keyframes pulseRed {
+  0% { filter: drop-shadow(0 0 8px var(--bad)); }
+  100% { filter: none; }
+}
+
+#minimap {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 0 14px rgba(79, 209, 255, 0.2);
+}
+
+.hud-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: #9fc4e0;
+  white-space: nowrap;
+}
+
+/* ---------------- device inspector ---------------- */
+
+.inspector {
+  position: absolute;
+  top: 70px;
+  right: 14px;
+  width: 300px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(79, 209, 255, 0.25);
+  display: none;
+  font-size: 12px;
+  z-index: 5;
+}
+.inspector.visible { display: block; }
+
+.insp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+}
+.insp-head button {
+  background: none;
+  border: none;
+  color: #9fc4e0;
+  font-size: 16px;
+  cursor: pointer;
+}
+.insp-body { padding: 8px 12px; }
+.insp-row {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(79, 209, 255, 0.1);
+  line-height: 1.5;
+}
+.insp-row:last-child { border-bottom: none; }
+.insp-led {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+.led-ok { background: var(--ok); box-shadow: 0 0 6px var(--ok); }
+.led-bad { background: var(--bad); box-shadow: 0 0 6px var(--bad); }
+.led-info { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+.insp-detail { color: #9fc4e0; }
+.insp-issue { color: var(--bad); }
+
+/* ---------------- screens ---------------- */
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, rgba(10, 16, 40, 0.55) 0%, rgba(2, 3, 8, 0.92) 75%);
+  z-index: 10;
+}
+.screen.visible { display: flex; }
+
+.panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 40px;
+  max-width: 560px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(79, 209, 255, 0.2);
+}
+
+/* let the animated scene show through behind the mobile "desktop only"
+   message, instead of the usual near-opaque screen backdrop */
+#screen-mobile-blocked {
+  background: radial-gradient(ellipse at center, rgba(10, 16, 40, 0.15) 0%, rgba(2, 3, 8, 0.55) 85%);
+}
+#screen-mobile-blocked .panel {
+  background: rgba(8, 12, 26, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.panel h1 {
+  font-size: 40px;
+  margin: 0 0 6px;
+  letter-spacing: 3px;
+  color: #dff2ff;
+  text-shadow: 0 0 18px rgba(79, 209, 255, 0.6);
+}
+.panel h1 .accent { color: var(--accent); }
+.panel h2 { margin-top: 0; letter-spacing: 2px; }
+.panel h2.bad { color: var(--bad); text-shadow: 0 0 14px rgba(255, 77, 94, 0.6); }
+.panel h2.ok { color: var(--ok); text-shadow: 0 0 14px rgba(92, 242, 154, 0.6); }
+
+.tagline {
+  color: #9fc4e0;
+  margin-top: 0;
+}
+
+.briefing {
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #c8dff2;
+  margin: 16px 0;
+}
+.briefing .ok { color: var(--ok); font-weight: bold; }
+.briefing .bad { color: var(--bad); font-weight: bold; }
+
+.controls-list {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  font-size: 12px;
+  color: #9fc4e0;
+  columns: 2;
+}
+.controls-list li { padding: 3px 0; }
+
+.btn-primary {
+  background: linear-gradient(180deg, #1b4a66, #103049);
+  border: 1px solid var(--accent);
+  color: #eafcff;
+  padding: 12px 28px;
+  font-size: 15px;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(79, 209, 255, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.btn-primary:hover {
+  box-shadow: 0 0 26px rgba(79, 209, 255, 0.6);
+  transform: translateY(-1px);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-mute {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  z-index: 20;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  color: #dff2ff;
+  box-shadow: 0 0 12px rgba(79, 209, 255, 0.15);
+}
+.btn-mute:hover { border-color: var(--accent); }
+.btn-mute.is-muted { color: #7fa8c9; }
+
+@media (max-width: 640px) {
+  .controls-list { columns: 1; }
+  .panel { padding: 24px 20px; max-width: 92vw; }
+}

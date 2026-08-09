@@ -1,0 +1,46 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Cache-bust asset URLs
+        # Replace the BUILD_ID placeholder in every ?v=BUILD_ID query string
+        # with this commit's short SHA, so browsers and the Pages CDN always
+        # fetch the freshly-deployed JS/CSS instead of a stale cached copy.
+        run: find . -name '*.html' -not -path './.git/*' -exec sed -i "s/BUILD_ID/${GITHUB_SHA::7}/g" {} +
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

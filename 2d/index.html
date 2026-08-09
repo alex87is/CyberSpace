@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberSpace — Network Inconsistency</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="style.css?v=BUILD_ID" />
+</head>
+<body>
+  <canvas id="game-canvas"></canvas>
+
+  <button id="btn-mute" class="btn-mute" title="Mute sound" aria-pressed="false">🔊</button>
+
+  <!-- HUD (visible while playing/paused) -->
+  <div id="hud" class="hud">
+    <div class="hud-top">
+      <div class="hud-pill">
+        <span class="hud-label">LIVES</span>
+        <span id="hud-lives" class="hud-lives"></span>
+      </div>
+      <div class="hud-pill">
+        <span class="hud-label">SCORE</span>
+        <span id="hud-score">0</span>
+      </div>
+      <div class="hud-pill">
+        <span class="hud-label">FIXED</span>
+        <span id="hud-objective">0/0</span>
+      </div>
+      <div class="hud-pill">
+        <span class="hud-label">TIME</span>
+        <span id="hud-time">0.0s</span>
+      </div>
+    </div>
+    <canvas id="minimap" width="220" height="150"></canvas>
+    <div class="hud-hint">WASD/&larr;&uarr;&rarr; fly &middot; SPACE / click fire &middot; click a device to inspect &middot; P pause</div>
+  </div>
+
+  <!-- device inspector side panel -->
+  <div id="inspector" class="inspector"></div>
+
+  <!-- Screens -->
+  <div id="screen-start" class="screen visible">
+    <div class="panel">
+      <h1>CYBER<span class="accent">SPACE</span></h1>
+      <p class="tagline">Find the network inconsistency. Destroy it before it destroys you.</p>
+      <div class="briefing">
+        <p>Ten devices float in this sector, wired together by BGP sessions, VRFs and
+        static routes. Most links are healthy — a calm <span class="ok">green laser</span>
+        joins two devices whose configuration actually agrees.</p>
+        <p>But a few interfaces reference a peer that <b>doesn't exist</b>: a ghost BGP
+        neighbor, a VRF mismatch, a neighbor address outside its own subnet, a dead OSPF
+        adjacency. Those fields glow <span class="bad">red</span> and arm a sweeping laser
+        turret. Touch the beam and you lose a life.</p>
+        <p>Fly in, dodge the sweep, and shoot the red emitter to fix the inconsistency.
+        Clear all of them to win.</p>
+      </div>
+      <ul class="controls-list">
+        <li><b>A/D or &larr;/&rarr;</b> — rotate</li>
+        <li><b>W or &uarr;</b> — thrust</li>
+        <li><b>SPACE / left click</b> — fire</li>
+        <li><b>click a device</b> — inspect its configuration</li>
+        <li><b>P / ESC</b> — pause</li>
+      </ul>
+      <button id="btn-start" class="btn-primary">LAUNCH ▶</button>
+    </div>
+  </div>
+
+  <!-- shown instead of screen-start on phones/tablets; the game needs a
+       keyboard (rotate/thrust/fire) and has no touch control scheme -->
+  <div id="screen-mobile-blocked" class="screen">
+    <div class="panel">
+      <h1>CYBER<span class="accent">SPACE</span></h1>
+      <h2 class="bad">DESKTOP ONLY</h2>
+      <p class="tagline">This one needs a keyboard.</p>
+      <p style="text-align:center; font-size:12px; color:#9fc4e0;">CyberSpace is flown with arrow keys and Space —
+      there's no touch control scheme. Open this page on a desktop or laptop with a keyboard to play.</p>
+    </div>
+  </div>
+
+  <div id="screen-paused" class="screen">
+    <div class="panel">
+      <h2>PAUSED</h2>
+      <button id="btn-resume" class="btn-primary">RESUME</button>
+    </div>
+  </div>
+
+  <div id="screen-gameover" class="screen">
+    <div class="panel">
+      <h2 class="bad">SHIP LOST</h2>
+      <p>The network stays inconsistent. Final score: <b id="final-score">0</b></p>
+      <button id="btn-retry-over" class="btn-primary">RETRY</button>
+    </div>
+  </div>
+
+  <div id="screen-win" class="screen">
+    <div class="panel">
+      <h2 class="ok">NETWORK CONSISTENT</h2>
+      <p>All inconsistencies destroyed in <b id="win-time">0s</b>.</p>
+      <p>Final score: <b id="win-score">0</b></p>
+      <button id="btn-retry-win" class="btn-primary">PLAY AGAIN</button>
+    </div>
+  </div>
+
+  <script src="../js/vec.js?v=BUILD_ID"></script>
+  <script src="../js/data.js?v=BUILD_ID"></script>
+  <script src="../js/mobile.js?v=BUILD_ID"></script>
+  <script src="../js/audio.js?v=BUILD_ID"></script>
+  <script src="js/starfield.js?v=BUILD_ID"></script>
+  <script src="js/entities.js?v=BUILD_ID"></script>
+  <script src="js/game.js?v=BUILD_ID"></script>
+  <script src="js/main.js?v=BUILD_ID"></script>
+</body>
+</html>

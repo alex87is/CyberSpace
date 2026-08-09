@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberSpace — Network Inconsistency</title>
+  <link rel="icon" href="data:," />
+  <!-- 3D is the main game now; send everyone straight there. The 2D arcade
+       version still lives at /2d/index.html for anyone who wants it, it's
+       just no longer advertised as a front-door choice. -->
+  <meta http-equiv="refresh" content="0; url=3d/index.html" />
+  <script>location.replace('3d/index.html');</script>
+  <style>
+    :root {
+      --bg: #020308;
+      --accent: #4fd1ff;
+      --panel-bg: rgba(8, 12, 26, 0.92);
+      --border: rgba(79, 209, 255, 0.35);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; width: 100%; height: 100%;
+      background: var(--bg); color: #dff2ff;
+      font-family: 'Segoe UI', 'Consolas', monospace;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 40px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(79, 209, 255, 0.2);
+    }
+    h1 { font-size: 28px; margin: 0 0 10px; letter-spacing: 3px; text-shadow: 0 0 18px rgba(79, 209, 255, 0.6); }
+    h1 .accent { color: var(--accent); }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>CYBER<span class="accent">SPACE</span></h1>
+    <p>Launching&hellip; <a href="3d/index.html">click here if you're not redirected</a>.</p>
+  </div>
+</body>
+</html>
