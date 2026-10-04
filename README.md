@@ -1,5 +1,10 @@
 # CyberSpace
 
+<p align="center">
+  <img src="docs/screenshots/flight-towers.jpg" alt="Flying between device towers with a red turret sweep ahead" width="49%">
+  <img src="docs/screenshots/bug-and-turrets.jpg" alt="A pink bug homing in on the ship between two red turret arcs" width="49%">
+</p>
+
 A game built around a real network-engineering idea: **network
 inconsistency**. The 3D WebGL flight version is the main game. An earlier
 2D top-down arcade version still lives in the repo, built from the exact
