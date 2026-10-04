@@ -1,9 +1,13 @@
 # CyberSpace
 
 <p align="center">
-  <img src="docs/screenshots/flight-towers.jpg" alt="Flying between device towers with a red turret sweep ahead" width="49%">
-  <img src="docs/screenshots/bug-and-turrets.jpg" alt="A pink bug homing in on the ship between two red turret arcs" width="49%">
+  <img src="docs/screenshots/flight-towers.jpg" alt="Flying between device towers with a red turret sweep ahead" width="100%">
 </p>
+<p align="center">
+  <img src="docs/screenshots/bug-and-turrets.jpg" alt="A pink bug homing in on the ship between two red turret arcs" width="100%">
+</p>
+
+<p align="center"><b><a href="https://alex87is.github.io/CyberSpace/3d/index.html">▶ Play CyberSpace in your browser</a></b></p>
 
 A game built around a real network-engineering idea: **network
 inconsistency**. The 3D WebGL flight version is the main game. An earlier
